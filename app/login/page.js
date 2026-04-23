@@ -1,4 +1,21 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const handleLogin = () => {
+    if (email && senha) {
+      router.push("/dashboard");
+    } else {
+      alert("Preencha e-mail e senha.");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#0F172A] via-[#111827] to-[#0B1120] text-white flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white text-black rounded-[32px] shadow-2xl p-8 md:p-10">
@@ -10,12 +27,20 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form className="space-y-5">
+        <form
+          className="space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
           <div>
             <label className="block text-sm font-medium mb-2">E-mail</label>
             <input
               type="email"
               placeholder="seuemail@exemplo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
@@ -25,12 +50,14 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="********"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               className="w-full rounded-2xl border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
           <button
-            type="button"
+            type="submit"
             className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-2xl transition"
           >
             Entrar
